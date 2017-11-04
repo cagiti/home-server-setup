@@ -1,0 +1,19 @@
+---
+  - name: add repository
+    apt_repository:
+      repo='ppa:stebbins/handbrake-releases'
+      state=present
+
+  - name: update
+    apt:
+      upgrade=dist
+      autoremove=yes
+      update_cache=yes
+
+  - name: install packages
+    apt:
+      name={{ item }}
+      state=present
+      autoremove=yes
+    with_items:
+      - handbrake-cli

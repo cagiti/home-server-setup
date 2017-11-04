@@ -1,0 +1,12 @@
+---
+- hosts: all
+  vars:
+    docker_compose_version: "1.16.1"
+  gather_facts: yes
+  become: yes
+  roles:
+    - developer_packages
+    - git
+    - docker_service
+    - docker_compose
+    - gcloud
