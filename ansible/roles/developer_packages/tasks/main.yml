@@ -27,3 +27,4 @@
       - xdg-utils
       - unzip
       - bash-completion
+      - ffmpeg
