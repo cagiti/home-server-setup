@@ -1,13 +1,20 @@
 #!/bin/bash
+MEDIA=/tmp
+#MEDIA=/opt/plex/media
+TV_SHOWS="${MEDIA}/TV Shows"
+GET_IPLAYER=./get_iplayer/get_iplayer
 
-if [ ! -d "/opt/plex/media/TV Shows/${programme}" ]; then
+#remove old history
+rm -rf ~/.get_iplayer
+
+if [ ! -d "${TV_SHOWS}/${programme}" ]; then
     echo "No directory exists for ${programme}, creating!"
-    mkdir "/opt/plex/media/TV Shows/${programme}"
+    mkdir -p "${TV_SHOWS}/${programme}"
 fi
 
 while read programme; do
     echo "getting programme id's for ${programme}"
-    ids=$(get-iplayer "${programme}" | \
+    ids=`${GET_IPLAYER} "${programme}" | \
       awk -F' ' '
         BEGIN {
           list=""
@@ -18,9 +25,10 @@ while read programme; do
         }
         END {
           print list
-        }')
+        }'`
 
-    cd "/opt/plex/media/TV Shows/${programme}"
+    cd "${TV_SHOWS}/${programme}"
     echo "Getting ${programme} using ${ids}"
-    get-iplayer --get $ids --tvmode=best
+    
+    ${GET_IPLAYER} $ids --get --tvmode=best
 done < ./rhaglennu
