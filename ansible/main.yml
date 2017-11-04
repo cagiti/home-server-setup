@@ -10,3 +10,4 @@
     - docker_service
     - docker_compose
     - gcloud
+    - handbrake_cli
